@@ -6,18 +6,17 @@ using UnityEngine.UI;
 public class PlayerScript : MonoBehaviour
 {
     private Rigidbody2D rd2d;
-
     public float speed;
-
     public Text score;
-
     private int scoreValue = 0;
+    public Text winText;
 
     // Start is called before the first frame update
     void Start()
     {
         rd2d = GetComponent<Rigidbody2D>();
         score.text = scoreValue.ToString();
+        winText.text = "";
     }
 
     // Update is called once per frame
@@ -32,10 +31,15 @@ public class PlayerScript : MonoBehaviour
                 Application.Quit();
             }
 
+        if (scoreValue >= 4)
+        {
+            winText.text = "You Win! Game created by Alan Castro";
+        }
+
     }
 
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
        if (collision.collider.tag == "Coin")
         {
@@ -46,7 +50,7 @@ public class PlayerScript : MonoBehaviour
 
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.collider.tag == "Ground")
         {
